@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Làm Chủ GPT-5: Hướng Dẫn Viết Prompt Toàn Diện</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .card-flip-container { perspective: 1000px; }
+        .card-flipper { transition: transform 0.6s; transform-style: preserve-3d; }
+        .card-flip-container.is-flipped .card-flipper { transform: rotateY(180deg); }
+        .card-front, .card-back { -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+        .card-back { transform: rotateY(180deg); }
+        html { scroll-behavior: smooth; }
+        
+        /* Mobile Nav */
+        #mobile-nav-menu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(-100%);
+        }
+        #mobile-nav-menu.is-open {
+            transform: translateX(0);
+        }
+        #mobile-nav-overlay {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300">
+
+    <!-- Header & Mobile Nav Toggle -->
+    <header class="sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                 <button id="mobile-nav-toggle" class="lg:hidden p-2 -ml-2">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+                <h1 class="text-lg font-bold truncate">Làm Chủ GPT-5</h1>
+            </div>
+            <button id="theme-toggle" class="p-2">
+                <i data-lucide="moon" id="theme-icon" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="fixed top-16 left-0 w-full h-1 z-50 bg-slate-200 dark:bg-slate-700">
+        <div id="progress-bar" class="h-full bg-cyan-500 transition-all duration-100"></div>
+    </div>
+
+    <!-- Mobile Nav Menu -->
+    <div id="mobile-nav-overlay" class="fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none lg:hidden"></div>
+    <aside id="mobile-nav-menu" class="fixed top-0 left-0 h-full w-72 bg-white dark:bg-slate-800 z-50 p-6 lg:hidden">
+        <div id="mobile-toc-container">
+            <!-- Mobile TOC will be injected here -->
+        </div>
+    </aside>
+
+    <!-- Main Layout -->
+    <div class="container mx-auto px-4 py-8 md:py-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+            
+            <!-- Desktop Sidebar / TOC -->
+            <aside class="w-1/4 hidden lg:block lg:sticky lg:top-20 self-start">
+                <div id="desktop-toc-container" class="p-4 rounded-lg border bg-white border-slate-200 dark:bg-slate-800 dark:border-slate-700">
+                    <!-- Desktop TOC will be injected here -->
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main id="main-content" class="lg:w-3/4">
+                <!-- Content will be injected here -->
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA (UPDATED) ---
+        const learningData = {
+          title: "Làm Chủ GPT-5: Hướng Dẫn Viết Prompt Toàn Diện",
+          audience: "Người dùng ChatGPT",
+          est_time_minutes: 30,
+          objectives: [
+            "Giải thích được sự thay đổi nền tảng trong tương tác với AI của GPT-5.",
+            "Vận dụng các kỹ thuật để kích hoạt chế độ tư duy sâu cho các vấn đề phức tạp.",
+            "Kiểm soát hiệu quả giọng điệu, định dạng và độ dài của câu trả lời.",
+            "Soạn thảo các prompt theo kiểu 'bản tóm tắt dự án' để giao việc lớn.",
+            "Phân tích và tránh các lỗi thường gặp khi viết prompt.",
+            "Áp dụng checklist 10 điểm để tối ưu hóa mọi prompt."
+          ],
+          sections: [
+            { id: "section-1", title: "1. Kỷ Nguyên Mới: GPT-5 'Tự Suy Nghĩ'", summary: "Hiểu về 'Hệ thống Hợp nhất' (Unified System) gồm 3 thành phần cốt lõi, thay đổi cách chúng ta tương tác với AI từ ra lệnh sang hợp tác.", bloom_coverage: ["Remember", "Understand"], activities: [
+                { component: "Flashcards", bloom: "Remember", data: [ { term: "GPT-5-main", definition: "Mô hình chủ lực, nhanh và hiệu quả, xử lý phần lớn các câu hỏi thông thường." }, { term: "GPT-5-thinking", definition: "Bộ não' chuyên sâu, một mô hình suy luận mạnh mẽ dành cho các vấn đề phức tạp." }, { term: "Router (Bộ định tuyến)", definition: "Nhạc trưởng' thông minh, phân tích mỗi prompt và quyết định giao nhiệm vụ cho 'main' (nhanh) hay 'thinking' (sâu)." } ] },
+                { component: "ConceptExplainer", bloom: "Understand", title: "Cách 'Bộ Định Tuyến' Ra Quyết Định", icon: "brain-circuit", concept: "Bộ định tuyến phân tích các tín hiệu trong prompt của bạn để chọn mô hình xử lý tối ưu.", points: [ { title: "Độ phức tạp của prompt", description: "Câu hỏi dài, nhiều biến số, yêu cầu phân tích đa tầng sẽ là tín hiệu để kích hoạt chế độ 'thinking'." }, { title: "Nhu cầu sử dụng công cụ", description: "Nếu yêu cầu cần tìm kiếm web, phân tích dữ liệu, hay tạo ảnh, router sẽ chọn mô hình phù hợp." }, { title: "Tín hiệu tường minh từ người dùng", description: "Khi bạn dùng các cụm từ như 'hãy nghĩ kỹ', bạn đang trực tiếp yêu cầu một sự phân tích sâu hơn." } ] }
+            ]},
+            { id: "section-2", title: "2. Kích Hoạt 'Tư Duy Sâu'", summary: "Học cách chủ động yêu cầu GPT-5 sử dụng năng lực suy luận mạnh nhất để giải quyết các vấn đề phức tạp.", bloom_coverage: ["Apply", "Create"], activities: [
+                { component: "WorkedExample", bloom: "Apply", task: "Chuyển đổi một prompt thông thường thành một prompt kích hoạt tư duy sâu.", steps: [ { title: "Prompt Thông Thường (Kiểu cũ)", content: `"Phân tích ưu và nhược điểm của việc đầu tư vào bất động sản."`, explanation: "Prompt này quá chung chung, sẽ chỉ nhận được câu trả lời bề mặt." }, { title: "Prompt Tối Ưu (Kiểu mới)", content: `"Hãy đóng vai một chuyên gia tài chính. **Nghĩ thật kỹ** và **phân tích từng bước** các ưu và nhược điểm của việc một người 30 tuổi, thu nhập 50 triệu/tháng, đầu tư vào một căn hộ chung cư tại Hà Nội năm 2026. **Sau mỗi luận điểm, hãy tự hỏi 'luận điểm này có rủi ro tiềm ẩn nào?'**"`, explanation: "Prompt này cung cấp bối cảnh rõ ràng, dùng cụm từ kích hoạt, và thiết lập quy trình tư duy phản biện." } ] },
+                { component: "ProjectBuilder", bloom: "Create", title: "Thiết Kế Quy Trình Tư Duy cho AI", brief: "Với GPT-5, bạn không chỉ yêu cầu kết quả, bạn có thể dạy AI cách đi đến kết quả đó. Hãy thử tạo một 'siêu prompt' định nghĩa một quy trình làm việc cho AI.", deliverables: ["Xác định một vấn đề phức tạp trong công việc của bạn.", "Soạn một prompt yêu cầu AI phân tích vấn đề đó.", "Trong prompt, yêu cầu AI tự đánh giá công việc của nó sau mỗi bước bằng 3 câu hỏi: 1. Chúng ta học được gì? 2. Câu hỏi nào tiếp theo? 3. Nó nên định hướng bước kế tiếp ra sao?"], tips: ["Kỹ thuật này biến cuộc trò chuyện thành một vòng lặp phân tích hợp tác, giúp mài giũa vấn đề hiệu quả."] }
+            ]},
+            { id: "section-3", title: "3. 'Ra Lệnh' & Kiểm Soát Đầu Ra", summary: "Làm chủ các công cụ để định hình giọng điệu, độ dài và định dạng của câu trả lời.", bloom_coverage: ["Remember", "Analyze"], activities: [
+                { component: "FeatureHighlight", bloom: "Remember", title: "Tính năng Mới: 'Personalities'", icon: "palette", featureName: "Personalities (Tính cách)", description: "Trong cài đặt ChatGPT, bạn có thể chọn một phong cách mặc định cho AI để không phải lặp lại chỉ dẫn về giọng điệu trong mỗi prompt.", items: [ { name: "Cynic (Người hoài nghi)", detail: "Giọng điệu châm biếm, sắc sảo." }, { name: "Robot (Người máy)", detail: "Khách quan, logic, không cảm xúc." }, { name: "Listener (Người lắng nghe)", detail: "Đồng cảm, hỗ trợ, nhẹ nhàng." }, { name: "Nerd (Mọt sách)", detail: "Chi tiết, đầy thông tin, nhiệt tình." } ] },
+                { component: "CompareBlock", bloom: "Analyze", title: "So Sánh: Yêu Cầu Mơ Hồ vs. Cụ Thể", itemA: { title: "Yêu cầu Mơ hồ", points: [`"Viết về lợi ích của thiền."`, `"Tóm tắt bài báo này."`], verdict: "Kết quả thường chung chung, tốn thời gian chỉnh sửa." }, itemB: { title: "Prompt Cụ Thể & Hiệu quả", points: [`"Liệt kê 5 lợi ích của thiền cho người làm văn phòng, dạng gạch đầu dòng."`, `"Tóm tắt bài báo sau thành 1 đoạn văn không quá 100 từ."`], verdict: "Kết quả chính xác, đúng định dạng và giọng điệu mong muốn." } }
+            ]},
+            { id: "section-4", title: "4. Giao Việc Lớn", summary: "Khai thác khả năng tự quản (agency) của GPT-5 để xử lý các dự án phức tạp, nhiều bước chỉ từ một yêu cầu cấp cao.", bloom_coverage: ["Create"], activities: [
+                { component: "ProjectBuilder", bloom: "Create", title: "Viết Prompt 'Bản Tóm Tắt Dự Án'", brief: "Thay vì chỉ dẫn từng li từng tí, hãy viết một prompt như một 'bản tóm tắt dự án' (project brief) bạn giao cho một trợ lý tài năng.", deliverables: ["Mục tiêu cuối cùng: (Ví dụ: Kế hoạch du lịch 5 ngày tại Đà Lạt).", "Bối cảnh & Ràng buộc: (Ví dụ: Ngân sách 20 triệu, thích thiên nhiên, đi vào tháng 12).", "Nguồn dữ liệu (gợi ý): (Ví dụ: Tham khảo các blog du lịch uy tín).", "Định dạng đầu ra: (Ví dụ: Trình bày trong bảng với các cột: Ngày, Hoạt động, Ăn uống, Chi phí)."], tips: ["Với prompt này, GPT-5 sẽ tự tìm kiếm, so sánh và tổng hợp thành một kế hoạch hoàn chỉnh."] }
+            ]},
+            { id: "section-5", title: "5. Những Lỗi Thường Gặp", summary: "Nhận biết và khắc phục các thói quen cũ không còn hiệu quả với GPT-5 để tối ưu hóa cách làm việc của bạn.", bloom_coverage: ["Analyze"], activities: [
+                { component: "Pitfalls", bloom: "Analyze", data: [ 
+                    { pitfall: "Quản lý Vi mô (Micromanaging)", description: "Cố viết prompt Chain-of-Thought phức tạp cho mọi vấn đề.", fix: "Hãy bắt đầu với một yêu cầu trực tiếp về mục tiêu cuối cùng. Tin tưởng vào router của GPT-5.", icon: "settings" }, 
+                    { pitfall: "'Bỏ đói' Bối cảnh", description: "Đưa ra yêu cầu lớn mà không có đủ thông tin nền.", fix: "Cung cấp đầy đủ bối cảnh, mục tiêu, đối tượng như trong một 'bản tóm tắt dự án'.", icon: "book-open" }, 
+                    { pitfall: "Tư duy Một Lượt", description: "Mong đợi một câu trả lời hoàn hảo ngay từ prompt đầu tiên.", fix: "Coi cuộc trò chuyện là một quá trình lặp đi lặp lại. Dùng câu trả lời đầu tiên để tinh chỉnh.", icon: "rotate-cw" },
+                    { pitfall: "Quên Các Công cụ Mới", description: "Viết prompt dài để mô tả giọng điệu thay vì sử dụng tính năng có sẵn.", fix: "Tận dụng các tính năng tích hợp như 'Personalities' để kiểm soát giọng điệu nhất quán.", icon: "tool" },
+                    { pitfall: "Yêu cầu Nhiều việc Cùng lúc", description: "Gộp nhiều yêu cầu không liên quan vào một prompt duy nhất.", fix: "Tách mỗi yêu cầu thành một prompt riêng biệt để đảm bảo chất lượng.", icon: "git-fork" },
+                    { pitfall: "Tin tưởng Mù quáng", description: "Chấp nhận mọi thông tin quan trọng mà không kiểm chứng.", fix: "Luôn giữ tư duy phản biện. Yêu cầu GPT-5 trích dẫn nguồn và kiểm tra lại.", icon: "alert-triangle" } 
+                ] }
+            ]},
+            { id: "section-6", title: "6. Checklist Dùng Nhanh", summary: "Sử dụng 10 mẹo vàng này để rà soát nhanh prompt của bạn trước khi nhấn nút 'Gửi'.", bloom_coverage: ["Apply"], activities: [
+                { component: "Checklist", bloom: "Apply", title: "10 Mẹo Vàng Cho Mọi Prompt", items: [ "Nêu rõ Mục tiêu cuối cùng chưa?", "Đã cung cấp đủ Bối cảnh (ai, cái gì, tại sao) chưa?", "Có cần Tín hiệu Phức tạp ('nghĩ kỹ') không?", "Đã xác định rõ Định dạng Đầu ra (bảng, danh sách) chưa?", "Đã dùng 'Personalities' để kiểm soát Giọng điệu chưa?", "Yêu cầu có quá nhiều việc không liên quan không?", "Đây có phải là một Dự án lớn không?", "Đang Yêu cầu Tích cực (nói điều muốn) hay tiêu cực?", "Sẵn sàng Tương tác và tinh chỉnh câu trả lời chưa?", "Đọc lại lần cuối, có điểm nào dễ hiểu lầm không?" ] }
+            ]},
+            { id: "section-7", title: "7. Tự Đánh Giá", summary: "Kiểm tra lại kiến thức đã học và thử thách bản thân.", bloom_coverage: ["Evaluate"], activities: [
+                { component: "Quiz", bloom: "Evaluate", data: [ { question: "Thành phần nào của GPT-5 chịu trách nhiệm phân tích prompt để quyết định dùng mô hình nhanh hay sâu?", options: ["GPT-5-main", "GPT-5-thinking", "Router (Bộ định tuyến)"], answer: "Router (Bộ định tuyến)", explanation: "Router hoạt động như 'nhạc trưởng', phân tích mỗi prompt và quyết định giao nhiệm vụ cho mô hình phù hợp nhất." }, { question: "Để yêu cầu GPT-5 phân tích kỹ lưỡng, cách hiệu quả nhất là gì?", options: ["Viết một prompt thật dài.", "Sử dụng các cụm từ kích hoạt như 'hãy nghĩ kỹ' hoặc 'phân tích từng bước'.", "Hỏi cùng một câu hỏi nhiều lần."], answer: "Sử dụng các cụm từ kích hoạt như 'hãy nghĩ kỹ' hoặc 'phân tích từng bước'.", explanation: "Các cụm từ này là tín hiệu trực tiếp đến Router để kích hoạt mô hình suy luận sâu (GPT-5-thinking)." }, { question: "Cách tiếp cận nào được khuyến khích khi giao một nhiệm vụ lớn, nhiều bước cho GPT-5?", options: ["Chia nhỏ thành nhiều prompt, mỗi prompt một bước.", "Viết một prompt duy nhất theo kiểu 'bản tóm tắt dự án' với mục tiêu, bối cảnh và định dạng rõ ràng.", "Chỉ đưa ra mục tiêu cuối cùng và để AI tự quyết định."], answer: "Viết một prompt duy nhất theo kiểu 'bản tóm tắt dự án' với mục tiêu, bối cảnh và định dạng rõ ràng.", explanation: "Cách này tận dụng khả năng tự lập kế hoạch của GPT-5, cho phép nó tự phân rã và thực hiện các bước cần thiết." } ] }
+            ]}
+          ],
+          glossary: [ { term: "Prompt Engineering", definition: "Kỹ thuật thiết kế và tối ưu hóa các câu lệnh (prompt) để AI tạo ra kết quả mong muốn." }, { term: "Collaborative Cognition", definition: "Tư duy hợp tác, mô tả mối quan hệ mới với GPT-5, trong đó người dùng và AI cùng nhau làm việc như những đối tác." }, { term: "Meta-prompt", definition: "Một 'siêu prompt' không chỉ yêu cầu kết quả, mà còn định nghĩa một quy trình làm việc và tự điều chỉnh cho AI." } ],
+          references: [ "GPT-5 in ChatGPT. (2025, August). OpenAI Help Center.", "Introducing GPT-5. (2025, August 7). OpenAI Blog.", "Mollick, E. (2025, August). GPT-5: It Just Does Stuff. One Useful Thing.", "The Neuron. (2025, August 8). GPT-5 is here... here's everything you need to know.", "India Today. (2025, August 8). GPT-5 explained: What it can do and why it matters." ]
+        };
+
+        // --- STYLING & RENDERING (NO CHANGE NEEDED HERE) ---
+        const bloomBorderClasses = { Remember: 'border-l-4 border-zinc-400 dark:border-zinc-500', Understand: 'border-l-4 border-sky-400 dark:border-sky-500', Apply: 'border-l-4 border-emerald-400 dark:border-emerald-500', Analyze: 'border-l-4 border-indigo-500 dark:border-indigo-500', Evaluate: 'border-l-4 border-violet-500 dark:border-violet-500', Create: 'border-l-4 border-rose-500 dark:border-rose-500' };
+        function renderCard(content, bloom) { return `<div class="rounded-xl shadow-md overflow-hidden transition-all duration-300 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 ${bloom ? bloomBorderClasses[bloom] : ''}"><div class="p-6">${content}</div></div>`; }
+        function renderSectionHeader(icon, title) { return `<div class="flex items-center gap-3 mb-4"><i data-lucide="${icon}" class="w-6 h-6 text-cyan-600 dark:text-cyan-400"></i><h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">${title}</h3></div>`; }
+
+        const componentRenderers = {
+            Flashcards: (activity) => { const { data, bloom } = activity; const content = `${renderSectionHeader('bot', 'Thuật Ngữ Cốt Lõi')}<div class="relative h-48 card-flip-container cursor-pointer"><div class="card-flipper absolute w-full h-full"><div class="card-front absolute w-full h-full rounded-lg flex items-center justify-center p-4 text-center bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700"><h4 class="text-2xl font-bold text-cyan-600 dark:text-cyan-400">${data[0].term}</h4></div><div class="card-back absolute w-full h-full rounded-lg flex items-center justify-center p-4 text-center bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700"><p class="text-slate-800 dark:text-slate-200">${data[0].definition}</p></div></div></div><div class="flex justify-between items-center mt-4"><button data-action="prev" class="flashcard-nav px-4 py-2 rounded-md text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">Trước</button><p class="flashcard-counter text-slate-500 dark:text-slate-400">1 / ${data.length}</p><button data-action="next" class="flashcard-nav px-4 py-2 rounded-md text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700">Sau</button></div>`; return renderCard(content, bloom); },
+            ConceptExplainer: (activity) => { const { title, icon, concept, points, bloom } = activity; const pointsHtml = points.map(point => `<li class="flex items-start gap-3"><i data-lucide="arrow-right" class="w-5 h-5 mt-1 shrink-0 text-cyan-600 dark:text-cyan-400"></i><div><h5 class="font-semibold text-slate-800 dark:text-slate-200">${point.title}</h5><p class="text-slate-500 dark:text-slate-400">${point.description}</p></div></li>`).join(''); const content = `${renderSectionHeader(icon, title)}<p class="mb-4 italic text-slate-500 dark:text-slate-400">${concept}</p><ul class="space-y-3">${pointsHtml}</ul>`; return renderCard(content, bloom); },
+            WorkedExample: (activity) => { const { task, steps, bloom } = activity; const stepsHtml = steps.map((step, index) => `<div class="p-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900"><h5 class="font-bold mb-2 ${index === 0 ? 'text-amber-500' : 'text-emerald-500'}">${step.title}</h5><code class="block whitespace-pre-wrap p-3 rounded bg-slate-200 dark:bg-slate-700 text-sm text-slate-800 dark:text-slate-200">${step.content.replace(/\*\*(.*?)\*\*/g, '<strong class="text-violet-500">$1</strong>')}</code><p class="mt-2 text-sm text-slate-500 dark:text-slate-400">${step.explanation}</p></div>`).join(''); const content = `${renderSectionHeader('lightbulb', 'Ví Dụ Thực Tế')}<p class="mb-4 text-slate-500 dark:text-slate-400">${task}</p><div class="space-y-4">${stepsHtml}</div>`; return renderCard(content, bloom); },
+            ProjectBuilder: (activity) => { const { title, brief, deliverables, tips, bloom } = activity; const deliverablesHtml = deliverables.map(item => `<li class="text-slate-500 dark:text-slate-400"><textarea class="w-full p-2 mt-1 rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-cyan-500" rows="2" placeholder="${item}"></textarea></li>`).join(''); const tipsHtml = tips ? `<div class="p-3 rounded-lg bg-cyan-50 dark:bg-cyan-900/20 border border-cyan-200 dark:border-cyan-800"><p class="text-sm text-cyan-800 dark:text-cyan-300">${tips.join('<br>')}</p></div>` : ''; const content = `${renderSectionHeader('target', title)}<p class="mb-4 text-slate-500 dark:text-slate-400">${brief}</p><div class="mb-4"><h5 class="font-bold mb-2 text-slate-800 dark:text-slate-200">Sản phẩm cần có:</h5><ul class="space-y-2 list-disc list-inside">${deliverablesHtml}</ul></div>${tips ? `<div><h5 class="font-bold mb-2 text-slate-800 dark:text-slate-200">Mẹo nhỏ:</h5>${tipsHtml}</div>` : ''}`; return renderCard(content, bloom); },
+            FeatureHighlight: (activity) => { const { title, icon, description, items, bloom } = activity; const itemsHtml = items.map(item => `<div class="p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900"><h5 class="font-semibold text-slate-800 dark:text-slate-200">${item.name}</h5><p class="text-sm text-slate-500 dark:text-slate-400">${item.detail}</p></div>`).join(''); const content = `${renderSectionHeader(icon, title)}<p class="mb-4 text-slate-500 dark:text-slate-400">${description}</p><div class="grid grid-cols-2 gap-4">${itemsHtml}</div>`; return renderCard(content, bloom); },
+            CompareBlock: (activity) => { const { title, itemA, itemB, bloom } = activity; const content = `${renderSectionHeader('chevrons-up-down', title)}<div class="grid md:grid-cols-2 gap-6"><div><h4 class="text-lg font-semibold mb-2 text-amber-500">${itemA.title}</h4><ul class="space-y-2 list-disc list-inside text-sm">${itemA.points.map(p => `<li class="text-slate-500 dark:text-slate-400">${p}</li>`).join('')}</ul><p class="mt-3 text-xs italic p-2 rounded bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300">${itemA.verdict}</p></div><div><h4 class="text-lg font-semibold mb-2 text-emerald-500">${itemB.title}</h4><ul class="space-y-2 list-disc list-inside text-sm">${itemB.points.map(p => `<li class="text-slate-500 dark:text-slate-400">${p}</li>`).join('')}</ul><p class="mt-3 text-xs italic p-2 rounded bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300">${itemB.verdict}</p></div></div>`; return renderCard(content, bloom); },
+            Pitfalls: (activity) => { const { data, bloom } = activity; const itemsHtml = data.map(item => `<div class="flex items-start gap-4"><div class="shrink-0"><i data-lucide="${item.icon}" class="w-6 h-6 text-red-500"></i></div><div><h5 class="font-bold text-slate-800 dark:text-slate-200">${item.pitfall}</h5><p class="text-sm text-slate-500 dark:text-slate-400 mb-1">${item.description}</p><div class="flex items-center gap-2"><i data-lucide="arrow-right" class="w-4 h-4 text-emerald-500"></i><p class="text-sm font-medium text-emerald-500">${item.fix}</p></div></div></div>`).join(''); const content = `${renderSectionHeader('alert-triangle', 'Lỗi Phổ Biến & Cách Sửa')}<div class="space-y-4">${itemsHtml}</div>`; return renderCard(content, bloom); },
+            Checklist: (activity) => { const { title, items, bloom } = activity; const itemsHtml = items.map(item => `<li class="flex items-center gap-3"><label class="flex items-center gap-3 text-slate-800 dark:text-slate-200"><input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-cyan-600 focus:ring-cyan-500"><span>${item}</span></label></li>`).join(''); const content = `${renderSectionHeader('list-checks', title)}<ul class="space-y-3">${itemsHtml}</ul>`; return renderCard(content, bloom); },
+            Quiz: (activity) => { const { data, bloom } = activity; const questionsHtml = data.map((q, qIndex) => `<div class="quiz-question" data-qindex="${qIndex}"><p class="font-semibold mb-2 text-slate-800 dark:text-slate-200">${qIndex + 1}. ${q.question}</p><div class="space-y-2">${q.options.map((option, oIndex) => `<button data-option="${option}" class="quiz-option w-full text-left p-3 rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 ring-2 ring-transparent transition-all duration-200 hover:ring-cyan-400">${option}</button>`).join('')}</div><div class="quiz-feedback mt-2 p-3 rounded-lg text-sm hidden"></div></div>`).join(''); const content = `${renderSectionHeader('award', 'Kiểm Tra Nhanh')}<div class="space-y-6">${questionsHtml}</div><div class="mt-6 text-center"><button class="quiz-submit w-full px-6 py-3 rounded-lg text-white font-bold transition-colors bg-cyan-500 hover:bg-cyan-600">Nộp bài</button><div class="quiz-score p-4 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 hidden"></div></div>`; return renderCard(content, bloom); }
+        };
+
+        // --- MAIN APP LOGIC ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainContent = document.getElementById('main-content');
+            const desktopTocContainer = document.getElementById('desktop-toc-container');
+            const mobileTocContainer = document.getElementById('mobile-toc-container');
+            const progressBar = document.getElementById('progress-bar');
+            const themeToggle = document.getElementById('theme-toggle');
+            const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+            const mobileNavMenu = document.getElementById('mobile-nav-menu');
+            const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+
+            function renderApp() {
+                const headerHtml = `<header class="mb-12"><h1 class="text-4xl md:text-5xl font-extrabold mb-4 text-slate-900 dark:text-slate-100">${learningData.title}</h1><p class="text-lg text-slate-500 dark:text-slate-400">Dành cho: ${learningData.audience} · Ước tính ${learningData.est_time_minutes} phút đọc</p><div class="mt-6 p-6 rounded-xl bg-violet-50 dark:bg-violet-900/20 border border-violet-200 dark:border-violet-800"><h3 class="text-xl font-bold mb-3 flex items-center gap-2 text-violet-600 dark:text-violet-400"><i data-lucide="book-open" class="w-6 h-6"></i>Mục tiêu học tập</h3><ul class="grid md:grid-cols-2 gap-x-8 gap-y-2">${learningData.objectives.map(obj => `<li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 mt-1 shrink-0 text-violet-600 dark:text-violet-400"></i><span class="text-violet-800 dark:text-violet-300">${obj}</span></li>`).join('')}</ul></div></header>`;
+                const sectionsHtml = learningData.sections.map(section => `<section id="${section.id}" class="mb-12"><h2 class="text-3xl font-bold mb-2 text-slate-900 dark:text-slate-100">${section.title}</h2><p class="text-md italic mb-6 text-slate-500 dark:text-slate-400">${section.summary}</p><div class="space-y-8">${section.activities.map(activity => componentRenderers[activity.component] ? componentRenderers[activity.component](activity) : '').join('')}</div></section>`).join('');
+                const footerHtml = `<footer class="mt-20 pt-10 border-t border-slate-200 dark:border-slate-700"><h2 class="text-3xl font-bold mb-6 text-slate-900 dark:text-slate-100">Bảng Chú Giải & Tham Khảo</h2><div class="space-y-4 mb-8">${learningData.glossary.map(item => `<div class="p-4 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700"><h4 class="font-bold text-lg text-cyan-600 dark:text-cyan-400">${item.term}</h4><p class="text-slate-500 dark:text-slate-400">${item.definition}</p></div>`).join('')}</div><div class="space-y-2"><h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">Nguồn tham khảo</h3><ul class="list-disc list-inside text-sm text-slate-500 dark:text-slate-400">${learningData.references.map(ref => `<li>${ref}</li>`).join('')}</ul></div></footer>`;
+                mainContent.innerHTML = headerHtml + sectionsHtml + footerHtml;
+
+                const tocHtml = `<h2 class="text-lg font-bold mb-4">Mục lục</h2><nav><ul class="space-y-2">${learningData.sections.map(section => `<li><a href="#${section.id}" data-toc-id="${section.id}" class="toc-link block p-2 rounded-md text-sm transition-colors text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700">${section.title}</a></li>`).join('')}</ul></nav>`;
+                desktopTocContainer.innerHTML = tocHtml;
+                mobileTocContainer.innerHTML = tocHtml;
+                
+                lucide.createIcons();
+            }
+            renderApp();
+
+            function updateThemeIcon() { document.getElementById('theme-icon').setAttribute('data-lucide', document.documentElement.classList.contains('dark') ? 'sun' : 'moon'); lucide.createIcons(); }
+            updateThemeIcon();
+            themeToggle.addEventListener('click', () => { document.documentElement.classList.toggle('dark'); updateThemeIcon(); });
+
+            function closeMobileNav() { mobileNavMenu.classList.remove('is-open'); mobileNavOverlay.classList.add('opacity-0', 'pointer-events-none'); }
+            mobileNavToggle.addEventListener('click', () => { mobileNavMenu.classList.add('is-open'); mobileNavOverlay.classList.remove('opacity-0', 'pointer-events-none'); });
+            mobileNavOverlay.addEventListener('click', closeMobileNav);
+            mobileTocContainer.addEventListener('click', (e) => { if (e.target.closest('a')) { closeMobileNav(); } });
+            
+            const sections = document.querySelectorAll('section[id]');
+            const tocLinks = document.querySelectorAll('.toc-link');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        tocLinks.forEach(link => {
+                            link.classList.remove('font-bold', 'text-cyan-600', 'dark:text-cyan-400', 'bg-cyan-100', 'dark:bg-cyan-900/30');
+                            if (link.dataset.tocId === entry.target.id) { link.classList.add('font-bold', 'text-cyan-600', 'dark:text-cyan-400', 'bg-cyan-100', 'dark:bg-cyan-900/30'); }
+                        });
+                    }
+                });
+            }, { rootMargin: '-30% 0px -70% 0px' });
+            sections.forEach(section => observer.observe(section));
+            
+            window.addEventListener('scroll', () => {
+                const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+                progressBar.style.width = `${(window.scrollY / totalHeight) * 100}%`;
+            });
+
+            mainContent.addEventListener('click', (e) => {
+                const cardContainer = e.target.closest('.card-flip-container');
+                if (cardContainer) { cardContainer.classList.toggle('is-flipped'); }
+
+                const flashcardNav = e.target.closest('.flashcard-nav');
+                if (flashcardNav) {
+                    const cardWrapper = flashcardNav.closest('.p-6');
+                    const cardData = learningData.sections[0].activities[0].data;
+                    const counter = cardWrapper.querySelector('.flashcard-counter');
+                    let currentIndex = parseInt(counter.textContent.split(' / ')[0]) - 1;
+                    currentIndex = flashcardNav.dataset.action === 'next' ? (currentIndex + 1) % cardData.length : (currentIndex - 1 + cardData.length) % cardData.length;
+                    cardWrapper.querySelector('.card-flip-container').classList.remove('is-flipped');
+                    setTimeout(() => {
+                        cardWrapper.querySelector('.card-front h4').textContent = cardData[currentIndex].term;
+                        cardWrapper.querySelector('.card-back p').textContent = cardData[currentIndex].definition;
+                        counter.textContent = `${currentIndex + 1} / ${cardData.length}`;
+                    }, 150);
+                }
+
+                const quizOption = e.target.closest('.quiz-option');
+                if (quizOption && !quizOption.closest('.quiz-question').classList.contains('submitted')) {
+                    const questionDiv = quizOption.closest('.quiz-question');
+                    questionDiv.querySelectorAll('.quiz-option').forEach(btn => btn.classList.remove('ring-cyan-500'));
+                    quizOption.classList.add('ring-cyan-500');
+                    questionDiv.dataset.selected = quizOption.dataset.option;
+                }
+
+                const quizSubmit = e.target.closest('.quiz-submit');
+                if (quizSubmit) {
+                    const quizCard = quizSubmit.closest('.p-6');
+                    const quizData = learningData.sections.find(s => s.id === 'section-7').activities[0].data;
+                    let score = 0;
+                    quizCard.querySelectorAll('.quiz-question').forEach((qDiv, index) => {
+                        qDiv.classList.add('submitted');
+                        const selectedAnswer = qDiv.dataset.selected;
+                        const correctAnswer = quizData[index].answer;
+                        const feedbackEl = qDiv.querySelector('.quiz-feedback');
+                        qDiv.querySelectorAll('.quiz-option').forEach(btn => {
+                            btn.disabled = true;
+                            if (btn.dataset.option === correctAnswer) btn.classList.add('ring-2', 'ring-emerald-500');
+                            else if (btn.dataset.option === selectedAnswer) btn.classList.add('ring-2', 'ring-red-500');
+                        });
+                        feedbackEl.classList.remove('hidden');
+                        if (selectedAnswer === correctAnswer) {
+                            score++;
+                            feedbackEl.innerHTML = `<p class="font-bold text-emerald-600 dark:text-emerald-400">Chính xác!</p> <p class="text-slate-500 dark:text-slate-400">${quizData[index].explanation}</p>`;
+                        } else {
+                            feedbackEl.innerHTML = `<p class="font-bold text-red-600 dark:text-red-400">Chưa chính xác.</p> <p class="text-slate-500 dark:text-slate-400">${quizData[index].explanation}</p>`;
+                        }
+                    });
+                    quizSubmit.classList.add('hidden');
+                    const scoreEl = quizCard.querySelector('.quiz-score');
+                    scoreEl.classList.remove('hidden');
+                    scoreEl.innerHTML = `<p class="text-lg font-bold text-slate-900 dark:text-slate-100">Bạn đã trả lời đúng ${score} / ${quizData.length} câu!</p>`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
