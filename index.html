@@ -128,7 +128,7 @@
                     { pitfall: "Quản lý Vi mô (Micromanaging)", description: "Cố viết prompt Chain-of-Thought phức tạp cho mọi vấn đề.", fix: "Hãy bắt đầu với một yêu cầu trực tiếp về mục tiêu cuối cùng. Tin tưởng vào router của GPT-5.", icon: "settings" }, 
                     { pitfall: "'Bỏ đói' Bối cảnh", description: "Đưa ra yêu cầu lớn mà không có đủ thông tin nền.", fix: "Cung cấp đầy đủ bối cảnh, mục tiêu, đối tượng như trong một 'bản tóm tắt dự án'.", icon: "book-open" }, 
                     { pitfall: "Tư duy Một Lượt", description: "Mong đợi một câu trả lời hoàn hảo ngay từ prompt đầu tiên.", fix: "Coi cuộc trò chuyện là một quá trình lặp đi lặp lại. Dùng câu trả lời đầu tiên để tinh chỉnh.", icon: "rotate-cw" },
-                    { pitfall: "Quên Các Công cụ Mới", description: "Viết prompt dài để mô tả giọng điệu thay vì sử dụng tính năng có sẵn.", fix: "Tận dụng các tính năng tích hợp như 'Personalities' để kiểm soát giọng điệu nhất quán.", icon: "tool" },
+                    { pitfall: "Quên Các Công cụ Mới", description: "Viết prompt dài để mô tả giọng điệu thay vì sử dụng tính năng có sẵn.", fix: "Tận dụng các tính năng tích hợp như 'Personalities' để kiểm soát giọng điệu nhất quán.", icon: "wrench" },
                     { pitfall: "Yêu cầu Nhiều việc Cùng lúc", description: "Gộp nhiều yêu cầu không liên quan vào một prompt duy nhất.", fix: "Tách mỗi yêu cầu thành một prompt riêng biệt để đảm bảo chất lượng.", icon: "git-fork" },
                     { pitfall: "Tin tưởng Mù quáng", description: "Chấp nhận mọi thông tin quan trọng mà không kiểm chứng.", fix: "Luôn giữ tư duy phản biện. Yêu cầu GPT-5 trích dẫn nguồn và kiểm tra lại.", icon: "alert-triangle" } 
                 ] }
@@ -141,19 +141,18 @@
             ]}
           ],
           glossary: [ { term: "Prompt Engineering", definition: "Kỹ thuật thiết kế và tối ưu hóa các câu lệnh (prompt) để AI tạo ra kết quả mong muốn." }, { term: "Collaborative Cognition", definition: "Tư duy hợp tác, mô tả mối quan hệ mới với GPT-5, trong đó người dùng và AI cùng nhau làm việc như những đối tác." }, { term: "Meta-prompt", definition: "Một 'siêu prompt' không chỉ yêu cầu kết quả, mà còn định nghĩa một quy trình làm việc và tự điều chỉnh cho AI." } ],
-          references: [
-  "GPT-5 in ChatGPT. (2025, August). OpenAI Help Center.",
-  "Introducing GPT-5. (2025, August 7). OpenAI Blog.",
-  "Introducing GPT-5 for developers. (2025, August 7). OpenAI Blog.",
-  "Mollick, E. (2025, August). GPT-5: It Just Does Stuff. One Useful Thing.",
-  "OpenAI. (2025, August 7). GPT-5 System Card.",
-  "Prompt engineering. (2025, August). OpenAI API Documentation.",
-  "The Neuron. (2025, August 8). GPT-5 is here… here's everything you need to know (so far…).",
-  "India Today. (2025, August 8). GPT-5 explained: What it can do and why it matters for ChatGPT users in 5 points.",
-  "Reddit r/ChatGPTPromptGenius. (2025, August). GPT-5 Prompt Frameworks: Guide to OpenAI's Unified AI System.",
-  "TS2.tech. (2025, August). GPT-5 Has Arrived: OpenAI's Next-Gen AI Stuns With Upgrades in Coding, Reasoning, and Safety."
-]
-
+          references: [ 
+              "GPT-5 in ChatGPT. (2025, August). OpenAI Help Center.",
+              "Introducing GPT-5. (2025, August 7). OpenAI Blog.",
+              "Introducing GPT-5 for developers. (2025, August 7). OpenAI Blog.",
+              "Mollick, E. (2025, August). GPT-5: It Just Does Stuff. One Useful Thing.",
+              "OpenAI. (2025, August 7). GPT-5 System Card.",
+              "Prompt engineering. (2025, August). OpenAI API Documentation.",
+              "The Neuron. (2025, August 8). GPT-5 is here… here's everything you need to know (so far…).",
+              "India Today. (2025, August 8). GPT-5 explained: What it can do and why it matters for ChatGPT users in 5 points.",
+              "Reddit r/ChatGPTPromptGenius. (2025, August). GPT-5 Prompt Frameworks: Guide to OpenAI's Unified AI System.",
+              "TS2.tech. (2025, August). GPT-5 Has Arrived: OpenAI's Next-Gen AI Stuns With Upgrades in Coding, Reasoning, and Safety."
+          ]
         };
 
         // --- STYLING & RENDERING (NO CHANGE NEEDED HERE) ---
@@ -187,7 +186,7 @@
             function renderApp() {
                 const headerHtml = `<header class="mb-12"><h1 class="text-4xl md:text-5xl font-extrabold mb-4 text-slate-900 dark:text-slate-100">${learningData.title}</h1><p class="text-lg text-slate-500 dark:text-slate-400">Dành cho: ${learningData.audience} · Ước tính ${learningData.est_time_minutes} phút đọc</p><div class="mt-6 p-6 rounded-xl bg-violet-50 dark:bg-violet-900/20 border border-violet-200 dark:border-violet-800"><h3 class="text-xl font-bold mb-3 flex items-center gap-2 text-violet-600 dark:text-violet-400"><i data-lucide="book-open" class="w-6 h-6"></i>Mục tiêu học tập</h3><ul class="grid md:grid-cols-2 gap-x-8 gap-y-2">${learningData.objectives.map(obj => `<li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 mt-1 shrink-0 text-violet-600 dark:text-violet-400"></i><span class="text-violet-800 dark:text-violet-300">${obj}</span></li>`).join('')}</ul></div></header>`;
                 const sectionsHtml = learningData.sections.map(section => `<section id="${section.id}" class="mb-12"><h2 class="text-3xl font-bold mb-2 text-slate-900 dark:text-slate-100">${section.title}</h2><p class="text-md italic mb-6 text-slate-500 dark:text-slate-400">${section.summary}</p><div class="space-y-8">${section.activities.map(activity => componentRenderers[activity.component] ? componentRenderers[activity.component](activity) : '').join('')}</div></section>`).join('');
-                const footerHtml = `<footer class="mt-20 pt-10 border-t border-slate-200 dark:border-slate-700"><h2 class="text-3xl font-bold mb-6 text-slate-900 dark:text-slate-100">Bảng Chú Giải & Tham Khảo</h2><div class="space-y-4 mb-8">${learningData.glossary.map(item => `<div class="p-4 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700"><h4 class="font-bold text-lg text-cyan-600 dark:text-cyan-400">${item.term}</h4><p class="text-slate-500 dark:text-slate-400">${item.definition}</p></div>`).join('')}</div><div class="space-y-2"><h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">Nguồn tham khảo</h3><ul class="list-disc list-inside text-sm text-slate-500 dark:text-slate-400">${learningData.references.map(ref => `<li>${ref}</li>`).join('')}</ul></div></footer>`;
+                const footerHtml = `<footer class="mt-20 pt-10 border-t border-slate-200 dark:border-slate-700"><h2 class="text-3xl font-bold mb-6 text-slate-900 dark:text-slate-100">Bảng Chú Giải & Tham Khảo</h2><div class="space-y-4 mb-8">${learningData.glossary.map(item => `<div class="p-4 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700"><h4 class="font-bold text-lg text-cyan-600 dark:text-cyan-400">${item.term}</h4><p class="text-slate-500 dark:text-slate-400">${item.definition}</p></div>`).join('')}</div><div class="space-y-2 mb-8"><h3 class="text-xl font-bold text-slate-900 dark:text-slate-100">Nguồn tham khảo</h3><ul class="list-disc list-inside text-sm text-slate-500 dark:text-slate-400">${learningData.references.map(ref => `<li>${ref}</li>`).join('')}</ul></div><div class="text-center text-sm text-slate-400 dark:text-slate-500"><p>Nội dung được phát triển và biên soạn bởi AI4Life Community.</p></div></footer>`;
                 mainContent.innerHTML = headerHtml + sectionsHtml + footerHtml;
 
                 const tocHtml = `<h2 class="text-lg font-bold mb-4">Mục lục</h2><nav><ul class="space-y-2">${learningData.sections.map(section => `<li><a href="#${section.id}" data-toc-id="${section.id}" class="toc-link block p-2 rounded-md text-sm transition-colors text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700">${section.title}</a></li>`).join('')}</ul></nav>`;
